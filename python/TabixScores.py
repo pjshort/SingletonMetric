@@ -62,7 +62,7 @@ def parse_cadd_tabix(args):
   tabixfile = pysam.Tabixfile(args.tabix)
   chr, pos, ref, alt = get_variants(args.tabix)
 
-  myfile = open(args.variants_out)
+  myfile = open(args.variants_out, 'w')
   myfile.write("\t".join(["chr", "pos", "ref", "alt", "unscaled_CADD", "scaled_CADD\n"]))
   for c, p, r, a in zip(chr, pos, ref, alt):
 
@@ -82,7 +82,7 @@ def parse_genomiser_tabix(args):
   tabixfile = pysam.Tabixfile(args.tabix)
   chr, pos, ref, alt = get_variants(args.variants)
 
-  myfile = open(args.variants_out)
+  myfile = open(args.variants_out, 'w')
   myfile.write("\t".join(["chr", "pos", "ref", "alt", "genomiser_ReMM\n"]))
   for c, p, r, a in zip(chr, pos, ref, alt):
 
@@ -95,6 +95,9 @@ def parse_genomiser_tabix(args):
 
 if __name__ == "main":
   args = get_options()
+  print args.variants_out
+  print args.score
+  print args.variants
 
   if args.score == "CADD":
     parse_cadd_tabix(args)
