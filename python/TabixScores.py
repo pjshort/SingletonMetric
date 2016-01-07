@@ -83,15 +83,15 @@ def parse_genomiser_tabix(args):
   chr, pos, ref, alt = get_variants(args.variants)
 
   myfile = open(args.variants_out)
-  myfile.write("\t".join(["chr", "pos", "ref", "alt", "genomiser_ReMM"]))
-for c, p, r, a in zip(chr, pos, ref, alt):
+  myfile.write("\t".join(["chr", "pos", "ref", "alt", "genomiser_ReMM\n"]))
+  for c, p, r, a in zip(chr, pos, ref, alt):
 
-  t = tabixfile.fetch(c, p-1, p)
-  for line in t: # only a single line, not allele specific
-    line = line.split("\t") # chr, pos, ref, alt, unscaled CADD, scaled CADD
-    myfile.write("\t".join([c,str(p),r,a,str(line[2]) + "\n"]))
+    t = tabixfile.fetch(c, p-1, p)
+    for line in t: # only a single line, not allele specific
+      line = line.split("\t") # chr, pos, ref, alt, unscaled CADD, scaled CADD
+      myfile.write("\t".join([c,str(p),r,a,str(line[2]) + "\n"]))
 
-myfile.close()
+  myfile.close()
 
 if __name__ == "main":
   args = get_options()
