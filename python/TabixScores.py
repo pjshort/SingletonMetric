@@ -3,20 +3,20 @@
 
 import pysam
 import argparse
-
+import sys
 
 def get_options():
     """ get the command line options
     """
 
     parser = argparse.ArgumentParser(description="Get CADD scores for set of alleles.")
-    parser.add_argument("--tabix", default=sys.stdout,
+    parser.add_argument("--tabix", default="/path/to/tabix/file",
         help="location of genome-wide CADD score tabix file")
-    parser.add_argument("--variants", default=sys.stdout,
+    parser.add_argument("--variants", default="/path/to/input/variants",
         help="location of variants in chr\tpos\tref\talt (minimal vcf) format")
     parser.add_argument("--variants_out", default=sys.stdout,
         help="path to send the list of variants with CADD scores to.")
-    parser.add_argument("--score", default=sys.stdout,
+    parser.add_argument("--score", default="CADD",
         help="Which score to compute. Accepts 'CADD' or 'Genomiser'.")
     args = parser.parse_args()
 
