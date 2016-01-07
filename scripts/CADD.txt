@@ -1,0 +1,6 @@
+# CADD
+
+# database needs to be downloaded to /lustre/scratch113/projects/ddd/users/ps14/CADD
+
+# samtools or pysam will be used to retrieve scores at each base from the tabix database
+

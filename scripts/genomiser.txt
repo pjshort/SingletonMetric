@@ -1,0 +1,7 @@
+# genomiser
+
+# the purely sequence-based score is called the Regulatory Mendelian Mutation score.
+# ranges from 0.0 to 1.0 (deleterious)
+
+# the predictions (genome-wide) are accessed via a tabix database on the farm in:
+# /lustre/scratch113/projects/ddd/users/ps14/genomiser

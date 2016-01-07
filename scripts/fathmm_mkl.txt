@@ -1,0 +1,13 @@
+# FATHMM-MKL
+
+# the genome-wide annotation tabix file was downloaded from: https://github.com/HAShihab/fathmm-MKL
+# and the instructions for building the index were easily completed
+
+# the database is stored at: /lustre/scratch113/projects/ddd/users/ps14/fathmm
+
+# the library (found in https://github.com/HAShihab/fathmm-MKL) is used to query the tabix for input alleles
+
+# run scoring on all of the alleles at once:
+
+cd ~/software/fathmm-MKL
+bsub -R"select[mem>800] rusage[mem=800]" -M800 -o ~/experiments/FATHMM/cne_parental_alleles_test.out python fathmm-MKL.py /lustre/scratch113/projects/ddd/users/ps14/FATHMM/CNE_parental_alleles_FATHMM_input.txt /lustre/scratch113/projects/ddd/users/ps14/FATHMM/CNE_parental_alleles_FATHMM_scored.txt /lustre/scratch113/projects/ddd/users/ps14/FATHMM/fathmm-MKL_Current.tab.gz

@@ -1,0 +1,7 @@
+# phastcons46 scores were downloaded from: http://genome.ucsc.edu/cgi-bin/hgTables
+# group: Comparative Genomics
+# track: Cons 46-Way
+
+# custom regions defined by regions in ../data/noncoding_regions.txt
+
+# these scores can be easily merged with the CNE_parental_alleles dataframe on chromosome and position
