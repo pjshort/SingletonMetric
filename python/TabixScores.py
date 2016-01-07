@@ -93,7 +93,7 @@ def parse_genomiser_tabix(args):
 
   myfile.close()
 
-if __name__ == "main":
+if __name__ == "__main__":
   args = get_options()
   print args.variants_out
   print args.score
