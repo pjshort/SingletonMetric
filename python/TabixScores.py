@@ -4,6 +4,7 @@
 import pysam
 import argparse
 import sys
+from statistics import median, mean
 
 def get_options():
     """ get the command line options
@@ -93,6 +94,27 @@ def parse_genomiser_tabix(args):
 
   myfile.close()
 
+def parse_gwava_tabix(args):
+  tabixfile = pysam.Tabixfile(args.tabix)
+  chr, pos, ref, alt = get_variants(args.variants)
+
+  myfile = open(args.variants_out, 'w')
+  myfile.write("\t".join(["chr", "pos", "ref", "alt", "score1", "score2", "score3", "mean", "median\n"]))
+  for c, p, r, a in zip(chr, pos, ref, alt):
+
+    t = tabixfile.fetch("chr" + c, p-1, p+1)  # bed file with start/stop not included
+    for line in t: # only a single line, not allele specific
+      line = line.split("\t") # chr, pos, ref, alt, unscaled CADD, scaled CADD
+      s1 = line[4]
+      s2 = line[5]
+      s3 = line[6]
+      avg = (float(s1) + float(s2) + float(s3))/3
+      med = sorted([s1, s2, s3])[1]
+      myfile.write("\t".join([c, str(p), r, a, s1, s2, s3, str(avg), med + "\n"]))
+
+  myfile.close()
+
+
 if __name__ == "__main__":
   args = get_options()
   print args.variants_out
@@ -103,3 +125,6 @@ if __name__ == "__main__":
     parse_cadd_tabix(args)
   elif args.score == "Genomiser":
     parse_genomiser_tabix(args)
+  elif args.score == "Gwava":
+    parse_gwava_tabix(args)
+
