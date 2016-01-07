@@ -60,7 +60,7 @@ def get_variants(variants_path):
 
 def parse_cadd_tabix(args):
   tabixfile = pysam.Tabixfile(args.tabix)
-  chr, pos, ref, alt = get_variants(args.tabix)
+  chr, pos, ref, alt = get_variants(args.variants)
 
   myfile = open(args.variants_out, 'w')
   myfile.write("\t".join(["chr", "pos", "ref", "alt", "unscaled_CADD", "scaled_CADD\n"]))
