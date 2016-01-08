@@ -4,7 +4,6 @@
 import pysam
 import argparse
 import sys
-from statistics import median, mean
 
 def get_options():
     """ get the command line options
@@ -122,9 +121,13 @@ if __name__ == "__main__":
   print args.variants
 
   if args.score == "CADD":
+    print "Retrieving %s scores for input variants..." % args.score
     parse_cadd_tabix(args)
   elif args.score == "Genomiser":
+    print "Retrieving %s scores for input variants..." % args.score
     parse_genomiser_tabix(args)
-  elif args.score == "Gwava":
+  elif args.score == "GWAVA":
+    print "Retrieving %s scores for input variants..." % args.score
     parse_gwava_tabix(args)
-
+  else:
+    print "Score keyword '%s' was not recognized." % args.score
