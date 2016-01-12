@@ -98,7 +98,7 @@ def parse_gwava_tabix(args):
   chr, pos, ref, alt = get_variants(args.variants)
 
   myfile = open(args.variants_out, 'w')
-  myfile.write("\t".join(["chr", "pos", "ref", "alt", "score1", "score2", "score3", "mean", "median\n"]))
+  myfile.write("\t".join(["chr", "pos", "ref", "alt", "region", "tss", "unmatched", "mean", "median\n"]))
   for c, p, r, a in zip(chr, pos, ref, alt):
 
     t = tabixfile.fetch("chr" + c, p-1, p+1)  # bed file with start/stop not included
