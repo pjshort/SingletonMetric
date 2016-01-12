@@ -4,3 +4,5 @@
 
 # samtools or pysam will be used to retrieve scores at each base from the tabix database
 
+cd ~/software/SingletonMetric/python
+bsub -q yesterday -J "CADD" -R"select[mem>100] rusage[mem=100]" -M100 -o ~/experiments/SingletonMetric/CADD_retrieve.out python TabixScores.py --score=CADD --variants=/lustre/scratch113/projects/ddd/users/ps14/CADD/CNE_parental_alleles.txt --tabix=/lustre/scratch113/projects/ddd/users/ps14/CADD/whole_genome_SNVs.tsv.gz --variants_out=/lustre/scratch113/projects/ddd/users/ps14/CADD/CNE_parental_alleles_CADD_scores.txt

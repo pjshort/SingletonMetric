@@ -4,4 +4,7 @@
 # ranges from 0.0 to 1.0 (deleterious)
 
 # the predictions (genome-wide) are accessed via a tabix database on the farm in:
-# /lustre/scratch113/projects/ddd/users/ps14/genomiser
+# /lustre/scratch113/projects/ddd/users/ps14/Genomiser
+
+cd ~/software/SingletonMetric/python
+bsub -q yesterday -J "Genomiser" -R"select[mem>100] rusage[mem=100]" -M100 -o ~/experiments/SingletonMetric/genomiser_retrieve.out python TabixScores.py --score=Genomiser --variants=/lustre/scratch113/projects/ddd/users/ps14/Genomiser/CNE_parental_alleles.txt --tabix=/lustre/scratch113/projects/ddd/users/ps14/Genomiser/ReMM_v0.1_unbiased_rounded.tsv.gz --variants_out=/lustre/scratch113/projects/ddd/users/ps14/Genomiser/CNE_parental_alleles_Genomiser_ReMM_scores.txt

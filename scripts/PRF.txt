@@ -11,4 +11,6 @@
 # E083    Fetal Heart
 # E116    GM12878 Lymphoblastoid Cells
 
-# scores are in ../scores/ddd_unaffected_parental_alleles_CNE.merged.singlescore.txt
+# scores for 8 brain dev cell types are in ../scores/ddd_unaffected_parental_alleles_CNE.merged.singlescore.txt
+# max score across all 119 cell types are in ../scores/ddd_unaffected_parental_alleles_CNE.maxPRF.119epigenomes.noNAs.txt
+
