@@ -54,7 +54,7 @@ def subsample_1kg(args):
     tabixfile = pysam.Tabixfile("/lustre/scratch113/projects/ddd/resources/1000G_MAF_20141114/ALL.chr%i.vcf.gz" % chr)
     count = 0
     chr_length = chromosome_sizes[str(chr)]
-    while count < args.variants_per_chr:
+    while count < int(args.variants_per_chr):
       pos = random.randint(1, chr_length + 1)
       t = tabixfile.fetch(chr, pos-1, pos)
       vars = list(t)
