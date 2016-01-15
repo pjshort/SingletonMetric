@@ -8,8 +8,6 @@ def get_options():
     """
 
     parser = argparse.ArgumentParser(description="Get CADD scores for set of alleles.")
-    parser.add_argument("--tabix", default="/path/to/tabix/file",
-        help="location of DNase peak bed files (gzipped with .tbi in same directory).")
     parser.add_argument("--variants", default="/path/to/input/variants",
         help="location of variants in chr\tpos\tref\talt (minimal vcf) format")
     parser.add_argument("--variants_out", default=sys.stdout,
@@ -61,7 +59,7 @@ if __name__ == "__main__":
   TABIX_DIR = "/lustre/scratch113/projects/ddd/users/ps14/REP/"
 
   try:
-    id_list = readlines(args.roadmap_epigenome_ids)
+    id_list = [line.rstrip() for line in open(args.roadmap_epigenome_ids)]
   except Name Error:
     pass  # take default (brain and brain developmental tissues)
 
