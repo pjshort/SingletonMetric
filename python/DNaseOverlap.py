@@ -12,7 +12,7 @@ def get_options():
         help="location of variants in chr\tpos\tref\talt (minimal vcf) format")
     parser.add_argument("--variants_out", default=sys.stdout,
         help="path to send the list of variants with DNASE overlap binary values.")
-    parser.add_argument("roadmap_epigenome_ids", default = ["E002", "E010", "E053", "E072", "E081", "E082", "E083"],
+    parser.add_argument("--roadmap_epigenome_ids", default = ["E002", "E010", "E053", "E072", "E081", "E082", "E083"],
     help = "list of roadmap epigenome project ideas in form E###.")
     args = parser.parse_args()
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
   try:
     id_list = [line.rstrip() for line in open(args.roadmap_epigenome_ids)]
-  except Name Error:
+  except NameError:
     pass  # take default (brain and brain developmental tissues)
 
   overlap_list = []
