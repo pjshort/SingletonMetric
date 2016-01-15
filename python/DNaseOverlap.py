@@ -1,7 +1,7 @@
 import pysam
 import argparse
 import sys
-
+import os
 
 def get_options():
     """ get the command line options
@@ -36,7 +36,7 @@ def get_variants(variants_path):
     return chr, pos, ref, alt
 
 
-def check_overlap(chr, pos, ref, alt, id, TABIX_DIR):
+def check_dnase_overlap(chr, pos, ref, alt, id, TABIX_DIR):
 
   tabixfile = pysam.Tabixfile(TABIX_DIR + "regions_enh_%s.bed.gz" % id) # e.g. E081 is male fetal brain
 
@@ -65,8 +65,11 @@ if __name__ == "__main__":
 
   overlap_list = []
   for id in id_list:
+    if !os.path.isfile("regions_enh_%s.bed.gz" % id):
+      print "No DNase Peaks for %s. Skipping and moving to the next tissue." % id
+      continue
     print "Intersecting parental alleles with %s DNase peaks." % id
-    overlap = check_overlap(chr, pos, ref, alt, id, TABIX_DIR)
+    overlap = check_dnase_overlap(chr, pos, ref, alt, id, TABIX_DIR)
     overlap_list.append(overlap)
 
   myvariants = open(variants_path, "r")
