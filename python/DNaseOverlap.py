@@ -72,7 +72,7 @@ if __name__ == "__main__":
     overlap = check_dnase_overlap(chr, pos, ref, alt, id, TABIX_DIR)
     overlap_list.append(overlap)
 
-  myvariants = open(variants_path, "r")
+  myvariants = open(args.variants, "r")
   variant_header =  myvariants.readline().rstrip()
   variants = myvariants.readlines()
 
