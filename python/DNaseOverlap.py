@@ -64,13 +64,16 @@ if __name__ == "__main__":
     pass  # take default (brain and brain developmental tissues)
 
   overlap_list = []
+  i = 0
   for id in id_list:
-    if !os.path.isfile("regions_enh_%s.bed.gz" % id):
+    if not os.path.isfile("/lustre/scratch113/projects/ddd/users/ps14/REP/regions_enh_%s.bed.gz" % id):
       print "No DNase Peaks for %s. Skipping and moving to the next tissue." % id
+      id_list.pop(i)
       continue
     print "Intersecting parental alleles with %s DNase peaks." % id
     overlap = check_dnase_overlap(chr, pos, ref, alt, id, TABIX_DIR)
     overlap_list.append(overlap)
+    i += 1
 
   myvariants = open(args.variants, "r")
   variant_header =  myvariants.readline().rstrip()
@@ -87,7 +90,7 @@ if __name__ == "__main__":
   i = 0
   for overlaps in zip(*overlap_list): # the * unpacks the list of lists
     var = variants[i].rstrip()
-    myfile.write(var + "\t".join(str(o) for o in overlaps) + "\n")
+    myfile.write(var + "\t" + "\t".join(str(o) for o in overlaps) + "\n")
     i += 1
 
   print 'Finished!'
