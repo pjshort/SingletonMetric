@@ -114,6 +114,25 @@ def parse_gwava_tabix(args):
   myfile.close()
 
 
+def parse_phylop_tabix(args):
+  tabixfile = pysam.Tabixfile(args.tabix)
+  chr, pos, ref, alt = get_variants(args.variants)
+
+  myfile = open(args.variants_out, 'w')
+  myfile.write("\t".join(["chr", "pos", "ref", "alt", "genomiser_ReMM\n"]))
+  for c, p, r, a in zip(chr, pos, ref, alt):
+
+    t = tabixfile.fetch(c, p-1, p)
+    for line in t:
+      line = line.split("\t") # chr, pos, pos, ref, alt, hg19_phylop
+      if (r == line[3]) & (a == line[4]):  # matches ref and alt
+        myfile.write("\t".join([c,str(p),r,a,str(line[4]), str(line[5]) + "\n"]))
+        break
+      else:
+        pass
+
+  myfile.close()
+
 if __name__ == "__main__":
   args = get_options()
   print args.variants_out
