@@ -47,6 +47,8 @@ def get_variants(variants_path):
     pos = []
     ref = []
     alt = []
+    ac = []
+    cq = []
     with open(variants_path, "r") as myvariants:
         myvariants.readline()  # skip the header
         for line in myvariants:
@@ -54,23 +56,25 @@ def get_variants(variants_path):
             chr.append(line[0])
             pos.append(int(line[1]))
             ref.append(line[2])
-            alt.append(line[3].rstrip())
+            alt.append(line[3])
+            ac.append(line[4])
+            cq.append(line[5].rstrip())
 
-    return chr, pos, ref, alt
+    return chr, pos, ref, alt, ac, cq
 
 def parse_cadd_tabix(args):
   tabixfile = pysam.Tabixfile(args.tabix)
-  chr, pos, ref, alt = get_variants(args.variants)
+  chr, pos, ref, alt, ac, cq = get_variants(args.variants)
 
   myfile = open(args.variants_out, 'w')
-  myfile.write("\t".join(["chr", "pos", "ref", "alt", "unscaled_CADD", "scaled_CADD\n"]))
-  for c, p, r, a in zip(chr, pos, ref, alt):
+  myfile.write("\t".join(["chr", "pos", "ref", "alt", "ac", "consequence", "unscaled_CADD", "scaled_CADD\n"]))
+  for c, p, r, a, ac, cq in zip(chr, pos, ref, alt, ac, cq):
 
     t = tabixfile.fetch(c, p-1, p)
     for line in t:
       line = line.split("\t") # chr, pos, ref, alt, unscaled CADD, scaled CADD
       if (r == line[2]) & (a == line[3]):  # matches ref and alt
-        myfile.write("\t".join([c,str(p),r,a,str(line[4]), str(line[5]) + "\n"]))
+        myfile.write("\t".join([c, str(p), r, a, ac, cq, str(line[4]), str(line[5]) + "\n"]))
         break
       else:
         pass
@@ -83,17 +87,17 @@ def parse_genomiser_tabix(args):
   chr, pos, ref, alt = get_variants(args.variants)
 
   myfile = open(args.variants_out, 'w')
-  myfile.write("\t".join(["chr", "pos", "ref", "alt", "genomiser_ReMM\n"]))
-  for c, p, r, a in zip(chr, pos, ref, alt):
+  myfile.write("\t".join(["chr", "pos", "ref", "alt", "ac", "consequence", "genomiser_ReMM\n"]))
+  for c, p, r, a, ac, cq in zip(chr, pos, ref, alt, ac, cq):
 
     t = tabixfile.fetch(c, p-1, p)
     for line in t: # only a single line, not allele specific
-      line = line.split("\t") # chr, pos, ref, alt, unscaled CADD, scaled CADD
-      myfile.write("\t".join([c,str(p),r,a,str(line[2]) + "\n"]))
+      line = line.split("\t") # chr, pos, ref, alt, genomiser
+      myfile.write("\t".join([c, str(p), r, a, ac, cq, str(line[2]) + "\n"]))
 
   myfile.close()
 
-def parse_gwava_tabix(args):
+def parse_gwava_tabix(args):  # deprecated
   tabixfile = pysam.Tabixfile(args.tabix)
   chr, pos, ref, alt = get_variants(args.variants)
 
@@ -114,7 +118,7 @@ def parse_gwava_tabix(args):
   myfile.close()
 
 
-def parse_phylop_tabix(args):
+def parse_phylop_tabix(args):  # deprecated
   tabixfile = pysam.Tabixfile(args.tabix)
   chr, pos, ref, alt = get_variants(args.variants)
 
